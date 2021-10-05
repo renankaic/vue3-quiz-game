@@ -25,13 +25,20 @@ export default {
       correctAnswer: undefined
     }
   },
+  computed: {
+    answers() {
+      let answers = JSON.parse(JSON.stringify(this.incorrectAnswers))
+      answers.push(this.correctAnswer)
+      return answers
+    }
+  },
   created() {
     this.axios
       .get('https://opentdb.com/api.php?amount=1&category=18&difficulty=medium')
       .then(response => {
         this.question = response.data.results[0].question
         this.incorrectAnswers = response.data.results[0].incorrect_answers
-        this.correctAnswer = response.data.results[0].correct_answer
+        this.correctAnswer = response.data.results[0].correct_answer        
       })        
   }
 }
