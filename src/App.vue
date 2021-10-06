@@ -53,7 +53,7 @@ export default {
       winCount: 0,
       loseCount: 0
     }
-  },
+  },  
   computed: {
     answers() {
       let answers = JSON.parse(JSON.stringify(this.incorrectAnswers))
@@ -69,10 +69,14 @@ export default {
       }
 
       this.answerSubmitted = true
-      if (this.chosenAnswer == this.correctAnswer) 
+      if (this.chosenAnswer == this.correctAnswer) {
         this.winCount++;
-      else 
+        localStorage.setItem("winCount", this.winCount)
+      } else {
         this.loseCount++
+        localStorage.setItem("loseCount", this.loseCount)
+      }
+
     },
     getNewQuestion() {
       this.answerSubmitted = false
@@ -90,6 +94,8 @@ export default {
   },
   created() {
     this.getNewQuestion()
+    this.winCount = localStorage.getItem("winCount") ? localStorage.getItem("winCount") : 0
+    this.loseCount = localStorage.getItem("loseCount") ? localStorage.getItem("loseCount") : 0
   }
 }
 </script>
